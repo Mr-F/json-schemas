@@ -33,7 +33,7 @@ consumer to render the most appropriate input method for the device being used.
 
 **HTML equivalance**
 
-.. code-block::
+.. code-block:: html
 
     <input type="date" />
 
@@ -42,7 +42,7 @@ Type: email
 
 **HTML equivalance:**
 
-.. code-block::
+.. code-block:: html
 
     <input type="email" />
 
@@ -53,7 +53,7 @@ The file type allows for files to be uploaded via the form.
 
 **HTML equivalence**
 
-.. code-block::
+.. code-block:: html
 
     <input type="file" />
 
@@ -64,7 +64,7 @@ The hidden input type allows to the form to define elements which should be hidd
 
 **HTML equivalence**
 
-.. code-block::
+.. code-block:: html
 
     <input type="hidden" />
 
@@ -75,7 +75,7 @@ The number input type allows for better support when collecting numerical data f
 
 **HTML equivalence**
 
-.. code-block::
+.. code-block:: html
 
     <input type="number" />
 
@@ -87,48 +87,78 @@ using the default mask.
 
 **HTML equivalence**
 
-.. code-block::
+.. code-block:: html
 
     <input type="password" />
 
 Type: range
 -----------
 
+This type supports the range type input, which is normamlly associated with some numerical value.
+
+**HTML equivalence**
+
+.. code-block:: html
+
+    <input type="range" />
 
 Type: select
 ------------
 
+This type allows for support of drop down select options.  Unlike most of the other types here this isn't a HTML input
+but a HTML tag.
+
+*HTML equivalence**
+
+.. code-block:: html
+
+    <select>...</select>
+
 Type: table
 -----------
+
+The table type, is used to allow us to structure data in 2D array/list.  This is most commonly used to display content
+rather than when collecting data from the user, but it is possible.
+
+**HTML equivalence**
+
+.. code-block:: html
+
+    <table>..</table>
 
 Type: tel
 ---------
 
+The tel input type allows for the easier collection of telephone numbers.
+
+**HTML equivalence**
+
+.. code-block:: html
+
+    <input type="tel" />
+
 Type: text
 ----------
+
+The text input type is the basic input type, and supports the collection of textual information.
+
+**HTML equivalence**
+
+.. code-block:: html
+
+    <input type="text" />
 
 Type: textarea
 --------------
 
+The text area input type is a special input that allows for the presenation of a larger input area which will accept
+and store carriage returns in the values being submitted.
+
+**HTML equivalence**
+
+.. code-block:: html
+
+    <texarea />
+
 Type: time
 ----------
-
-
-
-.. toctree::
-
-   checkbox
-   content
-   date
-   email
-   file
-   hidden
-   number
-   password
-   range
-   select
-   table
-   tel
-   text
-   textarea
-   time
