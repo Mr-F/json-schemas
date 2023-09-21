@@ -1,3 +1,7 @@
+.. include:: key_descriptions
+
+.. |title_description| Title description todo
+
 Text Type
 =========
 
@@ -12,6 +16,8 @@ Text Type
 Description
 -----------
 
+TODO
+
 JSON Example
 ------------
 
@@ -25,3 +31,19 @@ JSON Example
        "render_option": "default"
    }
 
+
+.. csv-table::
+   :header: Key, Required, Type, Description
+
+   type, Yes, enum, |type_description|
+   name, Yes, string, ""
+   title, Yes, string, |title_description|
+   value, Yes, null or string, ""
+   placeholder, No, string, ""
+   mask, No, string, ""
+   readonly, No, boolean, ""
+   disabled, No, boolean, ""
+   group_name, No, string, ""
+   error_msg, No, string, ""
+   conditional, No, object, ""
+   conditional_required, No, boolean, ""
