@@ -58,4 +58,68 @@ Parameters
 JSON Schema
 -----------
 
-To generate
+.. code-block:: json
+
+    {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "$id": "http://example.com/example.json",
+        "type": "object",
+        "default": {},
+        "title": "Root Schema",
+        "required": [
+            "type",
+            "name",
+            "title",
+            "value",
+            "required"
+        ],
+        "properties": {
+            "type": {
+                "type": "string",
+                "default": "",
+                "title": "The type Schema",
+                "examples": [
+                    "text"
+                ]
+            },
+            "name": {
+                "type": "string",
+                "default": "",
+                "title": "The name Schema",
+                "examples": [
+                    "input_name"
+                ]
+            },
+            "title": {
+                "type": "string",
+                "default": "",
+                "title": "The title Schema",
+                "examples": [
+                    "Input title"
+                ]
+            },
+            "value": {
+                "type": "null",
+                "default": null,
+                "title": "The value Schema",
+                "examples": [
+                    null
+                ]
+            },
+            "required": {
+                "type": "boolean",
+                "default": false,
+                "title": "The required Schema",
+                "examples": [
+                    true
+                ]
+            }
+        },
+        "examples": [{
+            "type": "text",
+            "name": "input_name",
+            "title": "Input title",
+            "value": null,
+            "required": true
+        }]
+    }
