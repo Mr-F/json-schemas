@@ -13,7 +13,6 @@ class BaseWidget:
     def __init__(self, *args, **kwargs):
         self.__dict__.update(kwargs)
 
-
     def get_base_data(self, field, cstruct) -> dict:
         return dict(
             type=self.input_type,
@@ -44,7 +43,6 @@ class BaseWidget:
             data = dict()
 
         return json.dumps(data)
-
 
     def deserialize(self, field, pstruct):
         pass
