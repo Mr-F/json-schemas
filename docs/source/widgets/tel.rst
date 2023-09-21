@@ -1,9 +1,11 @@
 .. include:: key_descriptions
 
-Text Widget
-===========
 
-This widget models a basic text input type.  This is the normally the default mapping for Colander type Str or String.
+Telephone Widget
+================
+
+This widget models a telephone input.  Using this specific input type allows the consumer to tigger custom UX elements
+such as mobile phone keypads when entering this information.
 
 Example
 -------
@@ -14,9 +16,9 @@ A simple text input example would look like this.
 
     colander.SchemaNode(
         colander.String(),
-        name="input_name",
-        title="Input title",
-        widget=JSONTextInputWidget()
+        name="phone_number",
+        title="Your phone number",
+        widget=JSONPhoneWidget()
     )
 
 This would generate the following JSON output.
@@ -24,9 +26,9 @@ This would generate the following JSON output.
 .. code-block:: json
 
     {
-        "type": "text",
-        "name": "input_name",
-        "title": "Input title",
+        "type": "tel",
+        "name": "phone_number",
+        "title": "Your phone number",
         "value": null,
         "required": true
     }

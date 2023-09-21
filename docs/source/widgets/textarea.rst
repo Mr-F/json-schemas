@@ -1,9 +1,9 @@
 .. include:: key_descriptions
 
-Text Widget
-===========
+TextArea Widget
+===============
 
-This widget models a basic text input type.  This is the normally the default mapping for Colander type Str or String.
+This widget models a textarea input e.g. <textarea>
 
 Example
 -------
@@ -16,7 +16,7 @@ A simple text input example would look like this.
         colander.String(),
         name="input_name",
         title="Input title",
-        widget=JSONTextInputWidget()
+        widget=JSONTextAreaWidget()
     )
 
 This would generate the following JSON output.
@@ -24,7 +24,7 @@ This would generate the following JSON output.
 .. code-block:: json
 
     {
-        "type": "text",
+        "type": "textarea",
         "name": "input_name",
         "title": "Input title",
         "value": null,

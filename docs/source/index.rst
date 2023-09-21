@@ -9,6 +9,7 @@ Contents
 --------
 
 .. toctree::
+   :maxdepth: 1
 
     widgets/index
     types/index
