@@ -6,6 +6,9 @@ rendering client to use when using HTML.  This does not mean that the consumer w
 the schema is being rendered outside of a web page.  As such input types typically map to a HTML input type or HTML tag.
 There are some input types values which don't map directly to a HTML equivalent type or tag.
 
+Type: button
+------------
+
 
 Type: checkbox
 --------------
@@ -162,3 +165,7 @@ and store carriage returns in the values being submitted.
 
 Type: time
 ----------
+
+
+Type: sequence
+--------------
