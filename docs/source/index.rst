@@ -10,5 +10,5 @@ Contents
 
 .. toctree::
 
-   types/index
-   api
+    widgets/index
+    types/index

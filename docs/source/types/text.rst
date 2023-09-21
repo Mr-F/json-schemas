@@ -1,12 +1,8 @@
-.. include:: key_descriptions
-
-.. |title_description| replace:: Title description todo
-
 Text Type
 =========
 
 .. csv-table::
-   :widths: 35, 100
+   :widths: 2, 4
 
    **Type**, text
    **HTML equivalence**, Yes
@@ -16,10 +12,12 @@ Text Type
 Description
 -----------
 
-TODO
+
 
 JSON Example
 ------------
+
+Simple example
 
 .. code-block:: json
 
@@ -34,16 +32,17 @@ JSON Example
 
 .. csv-table::
    :header: Key, Required, Type, Description
+   :widths: 2, 1, 2, 10
 
    type, Yes, enum, |type_description|
-   name, Yes, string, ""
+   name, Yes, string, |name_description|
    title, Yes, string, |title_description|
    value, Yes, null or string, ""
-   placeholder, No, string, ""
-   mask, No, string, ""
-   readonly, No, boolean, ""
-   disabled, No, boolean, ""
-   group_name, No, string, ""
-   error_msg, No, string, ""
+   placeholder, No, string, |placeholder_description|
+   mask, No, string, |mask_description|
+   readonly, No, boolean, |readonly_description|
+   disabled, No, boolean, |disabled_description|
+   group_name, No, string, |group_name_description|
+   error_msg, No, string, |error_msg_description|
    conditional, No, object, ""
    conditional_required, No, boolean, ""
