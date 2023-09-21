@@ -1,4 +1,4 @@
-.. include:: key_descriptions
+.. include:: ../descriptions.rst
 
 
 Telephone Widget

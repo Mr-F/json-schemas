@@ -10,5 +10,6 @@ Contents
 
 .. toctree::
 
-    widgets/index
     input_types
+    input_definition
+    widgets/index
