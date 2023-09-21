@@ -11,4 +11,4 @@ Contents
 .. toctree::
 
     widgets/index
-    types/index
+    input_types
