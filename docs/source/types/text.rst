@@ -1,6 +1,6 @@
 .. include:: key_descriptions
 
-.. |title_description| Title description todo
+.. |title_description| replace:: Title description todo
 
 Text Type
 =========
