@@ -10,5 +10,5 @@ Contents
 
 .. toctree::
 
-   input_types
+   types/index
    api

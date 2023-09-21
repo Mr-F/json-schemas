@@ -1,0 +1,2 @@
+Checkbox Input Type
+===================
