@@ -40,7 +40,7 @@ Parameters
    :header: Key, Required, Type, Description
    :widths: 2, 1, 2, 5
 
-    type, Yes, String, This will be "text". |type_description|
+    type, Yes, String, This will be "tel".
     name, Yes, String, |name_description|
     title, Yes, String, |title_description|
     value, Yes, String or null, ""
@@ -54,7 +54,6 @@ Parameters
     error_msg, No, String, |error_msg_description|
     conditional, No, Object, ""
     conditional_required, No, boolean, ""
-
 
 
 JSON Schema
