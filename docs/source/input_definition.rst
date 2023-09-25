@@ -13,12 +13,13 @@ The table below outlines the top level attributes that are currently supported.
     :header: Key, Core/Input Specific, Required, Data Type, Description
     :widths: 1, 1, 1, 2, 5
 
-    type, Core, Yes, String, |type_description|
+    input_type, Core, Yes, String, |type_description|
     name, Core, Yes, String, |name_description|
     title, Core, Yes, String, |title_description|
     value, Core, Yes, String or null, The current value that should appear in the input on load.
     required, Core, Yes, Boolean, |required_description|
     description, Core, No, String, |description_description|
+    tooltip, Core, No, String, |tooltip_description|
     readonly, Core, No, Boolean, |readonly_description|
     disabled, Core, No, Boolean, |disabled_description|
     group_name, Core, No, String, |group_name_description|
@@ -36,6 +37,7 @@ The table below outlines the top level attributes that are currently supported.
     display_format, Input Specific, No,
     rows, Input Specific, No, Integer,
     cols, Input Specific, No, Integer,
+    modal, Input Specific, No, Object,
 
 "render_options" Attribute
 --------------------------

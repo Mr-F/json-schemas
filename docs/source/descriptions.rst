@@ -19,3 +19,5 @@
 .. |error_msg_description| replace:: todo
 
 .. |description_description| replace:: todo
+
+.. |tooltip_description| replace:: todo
