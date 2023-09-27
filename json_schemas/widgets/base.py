@@ -20,7 +20,7 @@ class BaseWidget:
 
     def _get_translatable_attr(self, field, key: str) -> dict[str, str]:
         data = dict()
-        value = getattr(self, key, None)
+        value = getattr(field.schema, key, None)
         if value is not None:
             if isinstance(value, str):
                 # TODO: Add call the i18n library for the value if it's a string
@@ -36,50 +36,73 @@ class BaseWidget:
         """
         return getattr(field, True)
 
+    def is_readonly(self, field) -> bool:
+        return self.readonly
+
+    def is_disabled(self, field) -> bool:
+        return self.disabled
+
     def get_description(self, field) -> dict[str, str]:
         return self._get_translatable_attr(field, "description")
 
     def get_tooltip(self, field) -> dict[str, str]:
         return self._get_translatable_attr(field, "tooltip")
 
-    def get_group_name(self, field) -> Optional[str]:
+    def get_group_name(self, field) -> dict[str, str]:
         value = self._get_translatable_attr(field, "group_name")
         if value in [None, ""]:
             value = getattr(field.parent.schema, "default_group_name", None)
-        if isinstance(value, str):
-            # TODO: Add call the i18n library for the value if it's a string
-            pass
         return value
 
-    def get_error_msg(self):
-        pass
+    def get_error_msg(self, field) -> dict[str, str]:
+        data = dict()
+        error_msg = getattr(field.schema, "error_msg", None)
+        if error_msg is not None:
+            data["error_msg"] = error_msg
+        return data
 
-    def input_specific_data(self, field) -> dict:
-        return dict()
-
-    def core_data(self, field, cstruct: Any) -> dict:
+    def input_specific_data(self, field) -> dict[str, Any]:
         """
-        This is the function that returns the core data, checking if keys are set and if so adding them to the base
-        dictionary, or appropriate default where necessary.
+        Any widgets that have input specific values should override this function and return the values
+        that they wish to set e.g.
+
+            - Options widget: will need to set the "options", "mulitple" key-pairs
+            - Checkbox widget: will need to set the "checked" key-pair
+            - etc
 
         :param field:
-        :param cstruct:
         :return:
         """
-        pass
+        return dict()
+
+    def get_component_options_data(self, field) -> dict[str, Any]:
+        data = dict()
+        return data
+
+    def get_validation_data(self, field) -> dict[str, Any]:
+        data = dict()
+        return data
+
+    def get_conditional_data(self, field) -> dict[str, Any]:
+        data = dict()
+        return data
+
+    def get_derived_options_data(self, field) -> dict[str, Any]:
+        data = dict()
+        return data
 
     def serialize(self, field, cstruct, **kwargs) -> str:
         # Determine if the serialization should be readonly by checking both the kwargs and the readonly flag set on
         # the instance.
         # Test and make sure if we are handed a colander.null that it is converted to a None value
         if cstruct is colander.null:
-            if not self.readonly:
+            if not self.is_readonly(field):
                 cstruct = None
             else:
                 cstruct = self.readonly_null_value
 
         # Setup all the required core data values which are required
-        core_data = dict(
+        input_definition = dict(
             input_type=self.input_type,
             name=self.name,
             title=self.title,
@@ -87,42 +110,52 @@ class BaseWidget:
             required=self.is_required(field),
         )
 
-        # Adding the description data
-        core_data.update(self.get_description(field))
+        # Adding in the readonly flag, if needed
+        if self.is_readonly(field):
+            input_definition["readonly"] = True
 
-        # Add the group name (or default group name, if defined) to the dictionary
-        core_data.update(self.get_group_name(field))
+        # Adding in the disabled flag, if needed
+        if self.is_disabled(field):
+            input_definition["disabled"] = True
+
+        # Adding the description data
+        input_definition.update(self.get_description(field))
 
         # Add the tooltip value (if needed) to the dictionary
-        core_data.update(self.get_tooltip(field))
+        input_definition.update(self.get_tooltip(field))
 
-        # Next add in the optional keys which will require i18n support
-        optional_keys = [ "error_msg"]
-        for key in optional_keys:
-            value = getattr(field.schema, key, None)
-            if value is not None:
-                if isinstance(value, str):
-                    # TODO: Add call the i18n library for the value if it's a string
-                    pass
-                core_data[key] = value
+        # Add the group name (or default group name, if defined) to the dictionary
+        input_definition.update(self.get_group_name(field))
 
-        # Add in other optional keys which are defined by the widget
-        for key in optional_keys:
-            value = getattr(self, key, None)
-            # If the value is anything other than None or False then add to the data, otherwise skip
-            if value not in [None, False]:
-                core_data[key] = value
+        # Add in the error_msg if available
+        input_definition.update(self.get_error_msg(field))
 
         # Add the input specific values
-        core_data.update(self.input_specific_data(field))
+        input_definition.update(self.input_specific_data(field))
 
-        # Add the render options
+        # component_options
+        obj_data = self.get_component_options_data(field)
+        if obj_data is not {}:
+            input_definition["component_options"] = obj_data
 
-        # "render_options",
-        # "validations",
-        # "conditional"
+        # derived_options
+        if not self.is_readonly(field):
+            obj_data = self.get_derived_options_data(field)
+            if obj_data is not {}:
+                input_definition["derived_options"] = obj_data
 
-        return json.dumps(core_data)
+        # validations
+        if not self.is_readonly(field):
+            obj_data = self.get_validation_data(field)
+            if obj_data is not {}:
+                input_definition["validation"] =  obj_data
+
+        # conditional
+        obj_data = self.get_conditional_data(field)
+        if obj_data is not {}:
+            input_definition["conditional"] = obj_data
+
+        return json.dumps(input_definition)
 
     def deserialize(self, field, pstruct):
         pass

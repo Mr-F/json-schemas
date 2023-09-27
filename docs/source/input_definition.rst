@@ -3,14 +3,17 @@
 Input Definition
 ================
 
-Each form input is defined as a JSON object, that contains a number of different attributes.  A number of attributes
-are "core" and will be defined regardless of the input type, whilst others are specific to an type.  In addition, some
-of the attributes are required for a valid definition, whilst others are completely optional.
+Each form input is defined as a JSON object, that contains a number of different key-value pairs that help define the
+input attributes.  A number of these key-value pairs are input-agnostic and will be available in all definition, whilst other
+key-pair values will be input specific.
 
-The table below outlines the top level attributes that are currently supported.
+Attributes
+----------
+
+The following table outlines the top level key-value pairs that inputs can have.
 
 .. csv-table::
-    :header: Key, Core/Input Specific, Required, Data Type, Description
+    :header: Key, Common/Input Specific, Required, Data Type, Description
     :widths: 1, 1, 1, 2, 5
 
     input_type, Core, Yes, String, |type_description|
@@ -18,16 +21,12 @@ The table below outlines the top level attributes that are currently supported.
     title, Core, Yes, String, |title_description|
     value, Core, Yes, String or null, The current value that should appear in the input on load.
     required, Core, Yes, Boolean, |required_description|
-    description, Core, No, String, |description_description|
-    tooltip, Core, No, String, |tooltip_description|
     readonly, Core, No, Boolean, |readonly_description|
     disabled, Core, No, Boolean, |disabled_description|
+    description, Core, No, String, |description_description|
+    tooltip, Core, No, String, |tooltip_description|
     group_name, Core, No, String, |group_name_description|
     error_msg, Core, No, String, |error_msg_description|
-    render_options, Core, No, Object,
-    validation, Core, No, Object,
-    conditional, Core, No, Object,
-
     placeholder, Input Specific, No, String,
     mask, Input Specific, No, String,
     options, Input Specific, No, List,
@@ -38,9 +37,13 @@ The table below outlines the top level attributes that are currently supported.
     rows, Input Specific, No, Integer,
     cols, Input Specific, No, Integer,
     modal, Input Specific, No, Object,
+    component_options, Core, No, Object,
+    validation, Core, No, Object,
+    conditional, Core, No, Object,
+    derived_options, Core, No, Object,
 
-"render_options" Attribute
---------------------------
+Component Options
+-----------------
 
 .. csv-table::
     :header: Key, Required, Type, Description
@@ -52,15 +55,22 @@ The table below outlines the top level attributes that are currently supported.
     locked, No, Boolean,
 
     custom_support, No, ?,
+
+
+Derived Options
+---------------
+
+.. csv-table::
+    :header: Key, Required, Type, Description
+    :widths: 2, 1, 2, 5
+
     derived_value, No, List,
     derived_options, No, Object,
     derived_lookup, No, String,
     derived_form_lookup, No, String,
 
-
-
-"validation" Attribute
-----------------------
+Validation
+----------
 The validation object contains information about generic validations that will be applied to the data being submitted.
 Obviously not all validations are possible to express in this manner, however, were possible information will be
 included to allow the consumer of the JSON schema to perform client side validation before submitting to the server.
@@ -78,8 +88,8 @@ Below is a simple example of a min, max validation rules
 For more information about validation rules and how they are expressed in the validaiton block please see TODO: LINK
 
 
-"conditional" Attribute
------------------------
+Conditional
+-----------
 The conditional attribute, allows us to specify conditional logic on when and how specific fields should be displayed
 and if they are required to be answered.  For example, a previous input might ask the user to select a reason, with the
 final option being "other".  In these situation, the form designer might want to present a followup question to allow
