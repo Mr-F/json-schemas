@@ -1,9 +1,9 @@
 from json_schemas.widgets.base import BaseWidget
 
 
-class JSONPhoneWidget(BaseWidget):
+class JSONEmailWidget(BaseWidget):
 
     def __init__(self, *args, **kwargs):
-        kwargs["input_type"] = "text"
+        kwargs["input_type"] = "email"
         super().__init__(*args, **kwargs)
-        self.input_attributes = ["placeholder"]
+        self.input_attributes = ["multiple", "placeholder"]

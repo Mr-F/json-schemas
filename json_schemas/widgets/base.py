@@ -16,7 +16,9 @@ class BaseWidget:
     disabled: bool = False
 
     def __init__(self, *args, **kwargs):
+        self.input_attributes = []
         self.__dict__.update(kwargs)
+
 
     def _get_translatable_attr(self, field, key: str) -> dict[str, str]:
         data = dict()
@@ -34,7 +36,7 @@ class BaseWidget:
         :param field:
         :return:
         """
-        return getattr(field, True)
+        return getattr(field.schema, "required", True)
 
     def is_readonly(self, field) -> bool:
         return self.readonly
@@ -73,7 +75,12 @@ class BaseWidget:
         :param field:
         :return:
         """
-        return dict()
+        data = dict()
+        for input_attrib in self.input_attributes:
+            value = getattr(field.schema, input_attrib, None)
+            if value is not None:
+                data[input_attrib] = value
+        return data
 
     def get_component_options_data(self, field) -> dict[str, Any]:
         data = dict()
