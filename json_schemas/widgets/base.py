@@ -1,3 +1,4 @@
+import datetime
 import json
 import logging
 from typing import Any, Optional
@@ -8,17 +9,23 @@ log = logging.getLogger(__name__)
 
 class BaseWidget:
 
-    input_type: str = "text"
+    input_type: str
     name: str
     title: str
-    readonly: bool = False
-    readonly_null_value: Any = None
-    disabled: bool = False
+    readonly: bool
+    readonly_null_value: Any
+    disabled: bool
 
     def __init__(self, *args, **kwargs):
+        # Setup the default values for the instance
         self.input_attributes = []
-        self.__dict__.update(kwargs)
+        self.input_type = "text"
+        self.readonly = False
+        self.readonly_null_value = None
+        self.disabled = False
 
+        # Update the instance values based on the kwargs that have been provided.
+        self.__dict__.update(kwargs)
 
     def _get_translatable_attr(self, field, key: str) -> dict[str, str]:
         data = dict()
@@ -83,15 +90,53 @@ class BaseWidget:
         return data
 
     def get_component_options_data(self, field) -> dict[str, Any]:
-        data = dict()
+        data = dict(data_type=field.typ.__class__.__name__)
+
+        # Check to see if there is a render option defined and if so add that to the component options data
+        render_option = getattr(self, "render_option", None)
+        if render_option is not None:
+            data["render_option"] = render_option
+
         return data
 
     def get_validation_data(self, field) -> dict[str, Any]:
         data = dict()
+        # Attempt to get the validator for the schema associated with the field
+        validator = field.schema.validator
+        if validator is not None:
+
+            # TODO: Maybe we should push this to the validator implementation
+            # If the validator is All, it means it's a list of validators, which need to be ANDed together
+            if isinstance(validator, colander.All):
+                validators = validator.validators
+
+            # If the validator is Any, it means it's a list of validators, which needs to be ORed together
+            elif isinstance(validator, colander.Any):
+                # TODO: Figure out a way to describe the conditions when used within an ANY
+                validators = []
+
+            # Else it's a validator which we just need to c
+            else:
+                validators = [validator]
+
+            for _validator in validators:
+                if callable(getattr(_validator, "validation_rules", None)):
+                    data.update(_validator.validation_rules())
+
+            # Perform any reformatting that is requried e.g. datetime objs
+            for key, value in data.items():
+                # TODO: This feels like it could be improved especially when handling datetime or just time objects
+                if isinstance(value, (datetime.datetime, datetime.date)):
+                    data[key] = value.strftime("%Y-%m-%d")
+
         return data
 
     def get_conditional_data(self, field) -> dict[str, Any]:
         data = dict()
+        if hasattr(field.schema, "conditional"):
+            data["conditional"] = field.schema.conditional
+            if hasattr(field.schema, "conditional_required"):
+                data["conditional_required"] = field.schema.conditional_required
         return data
 
     def get_derived_options_data(self, field) -> dict[str, Any]:

@@ -1,12 +1,10 @@
-from typing import Any
-
 from json_schemas.widgets.base import BaseWidget
 
 
-class JSONTextWidget(BaseWidget):
+class JSONNumberWidget(BaseWidget):
 
-    default_input_type: str = "text"
-    default_input_attributes: list[str] = ["mask", "placeholder"]
+    default_input_type: str = "number"
+    default_input_attributes: list[str] = ["mask", "placeholder", "step"]
 
     def __init__(self, *args, **kwargs):
         kwargs["input_type"] = kwargs.get("input_type", self.default_input_type)
